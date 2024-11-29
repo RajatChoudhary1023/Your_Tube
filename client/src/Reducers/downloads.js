@@ -1,0 +1,11 @@
+const downloadsreducer=(state={data:null},action)=>{
+    switch (action.type) {
+        case "POST_DOWNLOADS":
+            return{...state,data:action?.data}
+        case "FETCH_ALL_DOWNLOADS":
+            return{...state,data:action?.payload}
+        default:
+            return state
+    }
+}
+export default downloadsreducer
