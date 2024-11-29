@@ -32,12 +32,12 @@ app.use('/comment',commentroutes)
 const PORT= process.env.PORT || 5000
 const otpStore = new Map();
 app.post('/send-otp', async (req, res) => {
-    const { email } = req.body; // Get email and OTP from the request body
+    const { email } = req.body; 
 
     try {
         const otp=await sendOtpEmail(email)
         console.log('Generated OTP:', otp);
-        otpStore.set(email, { otp, expiresAt: Date.now() + 5 * 60 * 1000 }); // 5-minute expiration
+        otpStore.set(email, { otp, expiresAt: Date.now() + 5 * 60 * 1000 }); 
         res.status(200).json({ message: 'OTP sent successfully' });
     } catch (error) {
         console.error('Error sending OTP:', error);
@@ -58,15 +58,15 @@ app.post('/verify-otp', (req, res) => {
         return res.status(400).json({ error: 'No OTP found for this email' });
     }
 
-    // Check if the OTP has expired
+
     if (Date.now() > storedOtpData.expiresAt) {
-        otpStore.delete(email); // Clean up expired OTP
+        otpStore.delete(email); 
         return res.status(400).json({ error: 'OTP has expired' });
     }
 
-    // Verify the OTP
+
     if (storedOtpData.otp === otp) {
-        otpStore.delete(email); // Clean up OTP after successful verification
+        otpStore.delete(email); 
         return res.status(200).json({ message: 'OTP verified successfully' });
     } else {
         return res.status(400).json({ error: 'Invalid OTP' });
@@ -105,27 +105,27 @@ app.post("/order", async (req, res) => {
       const digest = sha.digest("hex");
   
       if (digest !== razorpay_signature) {
-        // If validation fails, immediately return a response
+
         return res.status(400).json({ msg: "Transaction is not legit!" });
       }
   
-      // Update the user's premium status in the database
+
       const user = await userschema.findByIdAndUpdate(userId, { ispremium: true }, { new: true });
       console.log("Updated User:", user);
       
       
   
-      // Send a success response
+
       return res.json({
         msg: "success",
         orderId: razorpay_order_id,
         paymentId: razorpay_payment_id,
       });
     } catch (err) {
-      // Log the error for debugging
+
       console.error("Error updating user status:", err.message);
       res.status(500).json({ error: "Database update failed", details: err.message });
-      // Send an error response
+
       return res.status(500).json({ error: "Error updating user status" });
     
     }
