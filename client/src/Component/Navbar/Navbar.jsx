@@ -164,7 +164,7 @@ const Navbar = ({ toggledrawer, seteditcreatechanelbtn }) => {
                     </div>
                     <Link to={"/"} className='logo_div_Navbar'>
                         <img src={logo} alt="" />
-                        <p className="logo_title_navbar" style={{color:`${color}`}}>Your-Tube</p>
+                        <p className="logo_title_navbar" style={{color:`${color}`}}>Yours-Tube</p>
                     </Link>
                 </div>
                 <Searchbar />
